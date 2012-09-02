@@ -61,7 +61,6 @@
                 paletteId    = newPalette[0].id,
                 swatch;
 
-
             /**
              * Build a color palette.
             **/
@@ -73,8 +72,14 @@
                     $.fn.colorPicker.bindPalette(newHexField, swatch, transparent);
                 } else {
                     swatch.css("background-color", "#" + this);
+
+                    if(opts.chosenColors.length > 0 && opts.chosenColors.indexOf(this.toString()) > -1) {
+                      swatch.addClass('chosen');
+                    }
+
                     $.fn.colorPicker.bindPalette(newHexField, swatch);
                 }
+
                 swatch.appendTo(newPalette);
             });
 
@@ -283,7 +288,7 @@
                     $.fn.colorPicker.previewColor(color);
                 },
                 mouseout : function (ev) {
-                    $(this).css("border-color", "#000");
+                    $(this).css("border-color", "");
 
                     paletteInput.val(selectorOwner.css("background-color"));
 
@@ -322,7 +327,11 @@
         ],
 
         // If we want to simply add more colors to the default set, use addColors.
-        addColors : []
+        addColors : [],
+
+        chosenColors: [],
+
+        chosenClass: 'chosen'
     };
 
 })(jQuery);
